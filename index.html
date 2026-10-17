@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Ultimate Study Assistant | Created by Sakthi Raja</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- 1. INTRO SPLASH SCREEN (2 Seconds) -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1 class="glow-title">ZENITH</h1>
+            <p>Your Ultimate AI Study Companion</p>
+            <span class="creator-tag">Created by Sakthi Raja</span>
+            <button id="enter-btn" class="pulse-btn">Enter App <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APP CONTAINER -->
+    <div id="main-app" class="hidden">
+        
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>⚡ ZENITH</h2>
+                <small>By Sakthi Raja</small>
+            </div>
+            <ul class="nav-links">
+                <li class="active" onclick="switchTab('home')"><i class="fas fa-home"></i> Home</li>
+                <li onclick="switchTab('study')"><i class="fas fa-book-reader"></i> Study AI</li>
+                <li onclick="switchTab('notebook')"><i class="fas fa-book"></i> Notebook</li>
+                <li onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</li>
+            </ul>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            
+            <!-- HOME TAB -->
+            <section id="home-tab" class="tab-content active">
+                <header class="top-bar">
+                    <h2>Welcome to Zenith, Student! 👋</h2>
+                    <p>Empowering 1st to 12th Standard Learning (Tamil, English, Hindi, Physics, Chemistry, Maths & More)</p>
+                </header>
+                <div class="hero-card">
+                    <h2>Master Any Subject Instantly</h2>
+                    <p>Choose your grade, pick a subject, set your timer, and ask your questions via Voice or Typing to get precise, concise summaries!</p>
+                    <button class="primary-btn" onclick="switchTab('study')">Start Studying Now</button>
+                </div>
+            </section>
+
+            <!-- STUDY AI TAB -->
+            <section id="study-tab" class="tab-content">
+                <header class="top-bar">
+                    <h2><i class="fas fa-robot"></i> Zenith Smart Study Assistant</h2>
+                </header>
+                
+                <div class="study-grid">
+                    <!-- Config Box -->
+                    <div class="card config-card">
+                        <h3>1. Set Your Study Goal</h3>
+                        <div class="input-group">
+                            <label>Select Grade / Standard:</label>
+                            <select id="grade-select">
+                                <option value="1">1st Standard</option>
+                                <option value="2">2nd Standard</option>
+                                <option value="3">3rd Standard</option>
+                                <option value="4">4th Standard</option>
+                                <option value="5">5th Standard</option>
+                                <option value="6">6th Standard</option>
+                                <option value="7">7th Standard</option>
+                                <option value="8">8th Standard</option>
+                                <option value="9">9th Standard</option>
+                                <option value="10" selected>10th Standard</option>
+                                <option value="11">11th Standard</option>
+                                <option value="12">12th Standard</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Select Subject:</label>
+                            <select id="subject-select">
+                                <option value="Tamil">தமிழ் (Tamil)</option>
+                                <option value="English">English</option>
+                                <option value="Hindi" selected>हिन्दी (Hindi)</option>
+                                <option value="Maths">Mathematics</option>
+                                <option value="Physics">Physics</option>
+                                <option value="Chemistry">Chemistry</option>
+                                <option value="Biology">Biology</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="History">History / Social</option>
+                                <option value="Geography">Geography</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Study Duration (Minutes):</label>
+                            <input type="number" id="study-time" value="30" min="5" max="180">
+                            <button class="secondary-btn" onclick="startTimer()"><i class="fas fa-stopwatch"></i> Start Timer</button>
+                            <div id="timer-display">00:00</div>
+                        </div>
+                    </div>
+
+                    <!-- Query & Output Box -->
+                    <div class="card query-card">
+                        <h3>2. Ask Your Question / Topic</h3>
+                        <div class="input-group">
+                            <textarea id="user-query" placeholder="Type your topic here or click the mic to speak... (e.g., Photosynthesis, Newton Laws, Hindi Grammar)"></textarea>
+                            <div class="btn-row">
+                                <button class="mic-btn" onclick="startVoiceInput()"><i class="fas fa-microphone"></i> Speak</button>
+                                <button class="primary-btn" onclick="generateAnswer()">Generate Summary</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Summary Format / Length:</label>
+                            <select id="summary-length">
+                                <option value="1line">1 Line Quick Answer</option>
+                                <option value="2-3lines" selected>2-3 Lines Brief</option>
+                                <option value="short">Short Paragraph</option>
+                                <option value="5-6lines">5-6 Lines Detailed</option>
+                                <option value="bullets">Bullet Points</option>
+                            </select>
+                        </div>
+
+                        <div id="result-box" class="result-box">
+                            <p class="placeholder-text">Your generated answer summary will appear here...</p>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="save-btn" onclick="saveToNotebook()"><i class="fas fa-save"></i> Save to Notebook</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NOTEBOOK TAB -->
+            <section id="notebook-tab" class="tab-content">
+                <header class="top-bar">
+                    <h2><i class="fas fa-book"></i> Digital Notebook</h2>
+                    <p>Manage, Edit, and Save your study notes easily.</p>
+                </header>
+                <div class="card">
+                    <div id="notes-container">
+                        <p>No saved notes yet. Generate answers and save them here!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DASHBOARD TAB -->
+            <section id="dashboard-tab" class="tab-content">
+                <header class="top-bar">
+                    <h2><i class="fas fa-chart-line"></i> Student Dashboard</h2>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-clock fa-2x"></i>
+                        <h3 id="stat-time">0 mins</h3>
+                        <p>Total Study Time</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-file-alt fa-2x"></i>
+                        <h3 id="stat-notes">0</h3>
+                        <p>Saved Notes</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire fa-2x"></i>
+                        <h3>1 Day</h3>
+                        <p>Study Streak 🔥</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer Credit -->
+    <footer class="app-footer">
+        <p>Zenith Study Platform | Designed & Developed by <strong>Sakthi Raja</strong></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
